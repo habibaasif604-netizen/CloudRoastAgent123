@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudRoast - Savage DevOps & Code Reviewer Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="max-w-xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
+        <h1 class="text-3xl font-extrabold text-orange-500 mb-2">🔥 CloudRoast Agent</h1>
+        <p class="text-slate-400 text-sm mb-6">Paste any messy code, query, or architecture snippet. Let the savage cloud detective roast your choices instantly.</p>
+        
+        <textarea id="codeInput" rows="6" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 font-mono mb-4 text-slate-200" placeholder="Paste code, SQL query, or architecture diagram here..."></textarea>
+        
+        <button onclick="roastMe()" id="btn" class="w-full bg-orange-600 hover:bg-orange-500 font-bold py-3 rounded-xl transition duration-200 shadow-lg shadow-orange-900/30">Roast My Code 🚀</button>
+        
+        <div id="result" class="mt-6 hidden bg-slate-950 border border-slate-800 rounded-xl p-4 transition-all duration-300">
+            <div class="flex justify-between items-center mb-2">
+                <span id="severity" class="text-xs px-2.5 py-1 bg-red-950 text-red-400 border border-red-800 rounded-md font-bold uppercase tracking-wider"></span>
+                <span class="text-xs text-slate-400">Believability / Risk Score: <strong id="score" class="text-orange-400"></strong>/100</span>
+            </div>
+            <p id="roastText" class="text-sm italic text-slate-300 font-mono mt-3 leading-relaxed"></p>
+        </div>
+    </div>
+
+    <script>
+        function roastMe() {
+            const input = document.getElementById('codeInput').value.trim().toLowerCase();
+            const btn = document.getElementById('btn');
+            const resultDiv = document.getElementById('result');
+            
+            if(!input) {
+                alert('Please paste some code or architecture first!');
+                return;
+            }
+            
+            btn.innerText = "Dusting for bugs & analyzing...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                let roast = "";
+                let severity = "Spaghetti Architecture";
+                let score = 50;
+
+                // Dynamic Pattern Matching for any input type
+                if (input.includes("select *") || input.includes("drop") || input.includes("join") || input.includes("from")) {
+                    roast = "Bro really wrote queries like database bandwidth is free and indexes are just decorative ornaments. Your DBA is crying.";
+                    severity = "Database Apocalypse 💀";
+                    score = 12;
+                } 
+                else if (input.includes("ec2") || input.includes("server") || input.includes("database on same server") || input.includes("architecture")) {
+                    roast = "Putting the database and web server on a single EC2 instance without scaling? One traffic spike and your cloud bill will look like a phone number.";
+                    severity = "Single Point of Failure 💣";
+                    score = 22;
+                }
+                else if (input.includes("def ") || input.includes("import ") || input.includes("range(") || input.includes("print(")) {
+                    roast = "Classic Python indentation gymnastics. Relying entirely on whitespace because curly braces are too mainstream for your lifestyle.";
+                    severity = "Indentation Panic 🐍";
+                    score = 45;
+                } 
+                else if (input.includes("console.log") || input.includes("const ") || input.includes("function") || input.includes("=>")) {
+                    roast = "Another day, another 40 npm packages installed just to left-pad a string. Peak modern JavaScript engineering.";
+                    severity = "Node_Modules Overdose 📦";
+                    score = 35;
+                } 
+                else if (input.includes("#include") || input.includes("public class") || input.includes("cout") || input.includes("int main")) {
+                    roast = "Writing 200 lines of enterprise-grade boilerplate code just to print 'Hello World'. Memory leak incoming!";
+                    severity = "Segment Fault Danger ⚠️";
+                    score = 28;
+                } 
+                else if (input.includes("<html") || input.includes("<div") || input.includes("body {") || input.includes("margin")) {
+                    roast = "Centering a div took 3 hours, so you hardcoded `margin-left: 487px` and prayed to the CSS gods.";
+                    severity = "CSS Black Magic 🪄";
+                    score = 55;
+                } 
+                else if (input.includes("while") || input.includes("for(") || input.includes("loop")) {
+                    roast = "An unoptimized nested loop running directly in production on a Friday evening. Brave choice for someone who likes sleeping.";
+                    severity = "CPU Meltdown 🔥";
+                    score = 18;
+                } 
+                else {
+                    const randomScore = Math.max(10, Math.min(85, input.length % 90));
+                    roast = `This snippet compiles purely on hope and developer tears. What kind of mystical syntax sorcery are you trying to deploy here?`;
+                    severity = "Mysterious Codebase 🕵️‍♂️";
+                    score = randomScore;
+                }
+
+                document.getElementById('severity').innerText = severity;
+                document.getElementById('score').innerText = score;
+                document.getElementById('roastText').innerText = `"${roast}"`;
+                resultDiv.classList.remove('hidden');
+                
+                btn.innerText = "Roast My Code 🚀";
+                btn.disabled = false;
+            }, 600); // Small realistic delay for detective agent effect
+        }
+    </script>
+</body>
+</html>
